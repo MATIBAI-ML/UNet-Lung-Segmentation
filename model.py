@@ -33,8 +33,10 @@ def build_model(shape):
     for i, f in enumerate(num_filters):
         x = UpSampling2D((2,2))(x)
         xs = skip_x[i]
-        x = concatenate()([x, xs])
+        x = Concatenate()([x, xs])
         x = conv_block(x, f)
         
     x = Conv2D(1, (1,1), padding="same")(x)
     x = Activation("sigmoid")(x)
+    
+    return Model(inputs, x)
